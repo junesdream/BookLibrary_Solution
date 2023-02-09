@@ -41,7 +41,7 @@ public class BookRepo {
 
     public void deleteBookByIsbn(String isbn){
         Book bookToDelete = getBookByIsbn(isbn).orElseThrow(NoSuchElementException::new);
-
+        bookList.remove(bookToDelete);
     }
 
 }
