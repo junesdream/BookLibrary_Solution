@@ -1,6 +1,4 @@
 package de.neuefische.booklibrary.controller;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.booklibrary.model.Book;
 import de.neuefische.booklibrary.model.Cover;
 import de.neuefische.booklibrary.repo.BookRepo;
@@ -12,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
