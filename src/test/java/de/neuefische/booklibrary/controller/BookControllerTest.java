@@ -2,6 +2,8 @@ package de.neuefische.booklibrary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.booklibrary.model.Book;
+import de.neuefische.booklibrary.model.Cover;
+import de.neuefische.booklibrary.repo.BookRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +23,9 @@ class BookControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    BookRepo bookRepo;
+
     @Test
     @DirtiesContext
     void getAllBooks() throws Exception {
@@ -33,26 +37,19 @@ class BookControllerTest {
     @Test
     @DirtiesContext
     void getBookByIsbn() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/books")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                                {
-                                "title": "testTitle",
-                                "author" : "testAuthor",
-                                "cover" : "SOFTCOVER"
-                                }
-                                """));
-        Book bookToGet = objectMapper.readValue(result.andReturn().getResponse().getContentAsString(), Book.class);
 
-        mockMvc.perform(get("/api/books/"+bookToGet.isbn()))
+        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
+
+        mockMvc.perform(get("/api/books/123"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
-                        "title": "testTitle",
-                        "author" : "testAuthor",
-                        "cover" : "SOFTCOVER"
-                        }
-                        """));
+                         "isbn" : "123",
+                         "title": "testTitle",
+                         "author" : "testAuthor",
+                         "cover" : "SOFTCOVER"
+                         }
+                         """));
     }
 
     @Test
@@ -81,21 +78,13 @@ class BookControllerTest {
     @DirtiesContext
     void updateBook() throws Exception {
 
-        ResultActions result = mockMvc.perform(post("/api/books")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                                {
-                                "title": "testTitle",
-                                "author" : "testAuthor",
-                                "cover" : "SOFTCOVER"
-                                }
-                                """));
-        Book bookToUpdate = objectMapper.readValue(result.andReturn().getResponse().getContentAsString(), Book.class);
+        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
 
-        mockMvc.perform(put("/api/books/"+bookToUpdate.isbn())
+        mockMvc.perform(put("/api/books/123")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
+                                "id" : "123",
                                 "title": "updateTitle",
                                 "author" : "updateTitle",
                                 "cover" : "SOFTCOVER"
@@ -114,18 +103,9 @@ class BookControllerTest {
     @Test
     @DirtiesContext
     void deleteBook() throws Exception {
-        ResultActions result =  mockMvc.perform(post("/api/books")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "title": "testTitle",
-                                "author" : "testAuthor",
-                                "cover" : "SOFTCOVER"
-                                }
-                                """));
-        Book bookToDelete = objectMapper.readValue(result.andReturn().getResponse().getContentAsString(), Book.class);
-
-        mockMvc.perform(delete("/api/books/"+bookToDelete.isbn()))
-                .andExpect(status().isOk());
+        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
+                mockMvc.perform(delete("/api/books/123")
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
     }
 }
