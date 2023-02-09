@@ -5,5 +5,4 @@ public enum Cover {
     EBOOK,
     HARDCOVER,
     AUDIOBOOK,
-    ;
 }

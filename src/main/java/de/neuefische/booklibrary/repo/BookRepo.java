@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public class BookRepo {
 
-    List<Book> bookList;
+    private final List<Book> bookList;
 
     public BookRepo(List<Book> bookList) {
         this.bookList = bookList;

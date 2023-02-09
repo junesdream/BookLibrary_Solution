@@ -15,7 +15,6 @@ public class BookController {
         this.bookService = bookService;
     }
 
-
     @GetMapping
     public List<Book> getBooks(){
         return bookService.getAllBooks();

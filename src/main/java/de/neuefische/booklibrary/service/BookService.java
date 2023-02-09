@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
 @Service
 public class BookService {
 
-    BookRepo bookRepo;
-    IdService idService;
+    private final BookRepo bookRepo;
+    private final IdService idService;
 
     public BookService(BookRepo bookRepo, IdService idService) {
         this.bookRepo = bookRepo;
