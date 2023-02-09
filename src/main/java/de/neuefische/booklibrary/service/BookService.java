@@ -10,9 +10,11 @@ import java.util.NoSuchElementException;
 public class BookService {
 
     BookRepo bookRepo;
+    IdService idService;
 
-    public BookService(BookRepo bookRepo) {
+    public BookService(BookRepo bookRepo, IdService idService) {
         this.bookRepo = bookRepo;
+        this.idService = idService;
     }
 
     public List<Book> getAllBooks(){
@@ -25,7 +27,12 @@ public class BookService {
     }
 
     public Book addBook(Book bookToAdd){
-        return bookRepo.addBook(bookToAdd);
+        return bookRepo.addBook(new Book(
+                idService.generateId(),
+                bookToAdd.title(),
+                bookToAdd.author(),
+                bookToAdd.cover()
+        ));
     }
 
     public Book updateBookBy(String isbn, Book bookToUpdate){

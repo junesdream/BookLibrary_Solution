@@ -16,7 +16,8 @@ import static org.mockito.Mockito.*;
 class BookServiceTest {
 
     BookRepo bookRepo = mock(BookRepo.class);
-    BookService bookService = new BookService(bookRepo);
+    IdService idService = mock(IdService.class);
+    BookService bookService = new BookService(bookRepo, idService);
 
     @Test
     void getAllBooks() {
@@ -69,6 +70,7 @@ class BookServiceTest {
         );
         // WHEN
         when(bookRepo.addBook(bookToAdd)).thenReturn(bookToAdd);
+        when(idService.generateId()).thenReturn("1234");
         Book actual = bookService.addBook(bookToAdd);
         // THEN
         verify(bookRepo).addBook(bookToAdd);
