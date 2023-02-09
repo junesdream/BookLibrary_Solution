@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.booklibrary.model.Book;
 import de.neuefische.booklibrary.model.Cover;
 import de.neuefische.booklibrary.repo.BookRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,19 +27,31 @@ class BookControllerTest {
     @Autowired
     BookRepo bookRepo;
 
+    @BeforeEach
+    void addBookToRepo() {
+        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
+    }
+
     @Test
     @DirtiesContext
     void getAllBooks() throws Exception {
         mockMvc.perform(get("/api/books"))
                 .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
+                .andExpect(content().json("""
+                        [
+                        {
+                        "isbn" : "123",
+                        "title": "testTitle",
+                        "author" : "testAuthor",
+                        "cover" : "SOFTCOVER"
+                        }
+                        ]
+                        """));
     }
 
     @Test
     @DirtiesContext
     void getBookByIsbn() throws Exception {
-
-        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
 
         mockMvc.perform(get("/api/books/123"))
                 .andExpect(status().isOk())
@@ -78,8 +91,6 @@ class BookControllerTest {
     @DirtiesContext
     void updateBook() throws Exception {
 
-        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
-
         mockMvc.perform(put("/api/books/123")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -103,7 +114,6 @@ class BookControllerTest {
     @Test
     @DirtiesContext
     void deleteBook() throws Exception {
-        bookRepo.addBook(new Book("123", "testTitle", "testAuthor", Cover.SOFTCOVER));
                 mockMvc.perform(delete("/api/books/123")
                                 .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk());
