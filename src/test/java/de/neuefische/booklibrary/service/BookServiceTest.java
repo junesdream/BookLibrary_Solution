@@ -54,9 +54,8 @@ class BookServiceTest {
         String isbn = "1234";
         // WHEN
         when(bookRepo.getBookByIsbn(isbn)).thenThrow(new NoSuchElementException());
-        Book actual = bookService.getBookByIsbn(isbn);
         // THEN
-        assertThrows()
+        assertThrows(NoSuchElementException.class, () -> bookService.getBookByIsbn(isbn));
     }
 
     @Test
