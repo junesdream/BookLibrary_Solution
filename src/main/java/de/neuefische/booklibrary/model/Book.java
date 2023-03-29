@@ -7,3 +7,4 @@ public record Book(
         Cover cover
 ) {
 }
+

@@ -39,5 +39,5 @@ public class BookController {
     public void deleteBook(@PathVariable String isbn){
         bookService.deleteBookByIsbn(isbn);
     }
-
 }
+
