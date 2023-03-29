@@ -1,0 +1,9 @@
+.book-card {
+    margin: 12px;
+    padding: 10px;
+    background-color: black;
+    color:  white;
+    background-color: black;
+    border-radius: 12px;
+    border: #87FF2A 5px ridge;
+}

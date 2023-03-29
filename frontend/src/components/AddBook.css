@@ -1,0 +1,38 @@
+.addBook {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+.addBook input{
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.addBook button{
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border: double 3px transparent;
+    background-image:     linear-gradient(
+            to right,
+            #E7484F,
+            #F68B1D,
+            #FCED00,
+            #009E4F,
+            #00AAC3,
+            #732982
+    );
+    animation:slidebg 2s linear infinite;
+}
+
+.addBook input {
+    padding: 15px;
+    border-radius: 5px;
+    border: double 3px transparent;
+}
+
+
+

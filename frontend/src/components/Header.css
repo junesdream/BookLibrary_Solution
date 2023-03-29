@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+
+}
+
+.header h1{
+    font-weight: 900;
+    color: #61dafb;
+}
+
+.header-img{
+    width: 70px;
+}
+
+.header__title {
+    margin-left: 12px;
+}

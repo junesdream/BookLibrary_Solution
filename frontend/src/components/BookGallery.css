@@ -1,0 +1,11 @@
+.book-gallery {
+    display: flex;
+    gap: 12px;
+    border: none;
+    margin: 12px;
+    justify-content: space-around;
+}
+
+.book-gallery_column {
+
+}
